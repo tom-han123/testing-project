@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="tests">
+        <h1 class="text-center">Available Tests</h1>
+        <div class="select">
+            <form action="" method="GET" class="search-form">
+                {%csrf_token%}
+                <select name="q" id="">
+                    {% for category in category_list %}
+                        <option value="{{category.id}}">{{ category.category_name }}</option>
+                    {% endfor %}  
+                </select>
+                <input class="btn-search" type="submit" value="Search">
+            </form>
+            
+        </div>
+        
+    </div>   
+    <div class="container-home">
+       <div class="category">
+           <h2>Categories </h2>
+          <ul class="category__list">
+              
+              {% for category in category_list %}
+              <li>
+                <a href="{% url 'tests:home' %}?q={{category.id}}">{{ category.category_name }}</a>
+              </li>
+              {% endfor %}
+      
+            </ul>
+       </div>
+       <div class="title">
+       {% if title_list %}
+          {% for title in title_list %}
+      
+              <div class="title-list">
+                  <img src="{{title.img.url}}" alt="">
+                  <div class="title-content">
+                      <p class="lead">
+                          {{ title.title_name}}
+                      </p>
+                      <div class="test-link">
+                       <a href="{% url 'tests:index' title.id %}" class="text-md">TEST<i class="fa-solid fa-angle-right fa-1x"></i></a>
+   
+                      </div>
+                      
+                  </div>
+              </div>
+      
+          {% endfor %}
+       
+       {% else %}
+          <p class="text-md">NO TEST AVAILABLE.</p>
+       {% endif %}
+       </div>
+      
+    </div>
+</div>
+ 
+
+
+
+
+        
+
+{% endblock %}
